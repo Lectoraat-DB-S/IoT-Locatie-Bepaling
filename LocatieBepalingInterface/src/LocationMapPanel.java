@@ -4,6 +4,7 @@ import javax.swing.border.Border;
 
 public class LocationMapPanel extends JPanel
 {
+    // Map panel
     public LocationMapPanel()
     {
         setBackground(Color.WHITE);
@@ -13,6 +14,7 @@ public class LocationMapPanel extends JPanel
         setBorder(grayBorder);
     }
 
+    // New paintComponent function
     @Override
     protected void paintComponent(Graphics g)
     {

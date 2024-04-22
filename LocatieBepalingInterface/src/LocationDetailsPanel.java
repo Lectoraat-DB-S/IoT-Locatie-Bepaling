@@ -22,6 +22,7 @@ public class LocationDetailsPanel extends JPanel
         locationInfo.setText("Put location data here");
     }
 
+    // For updating text location
     public void updateLocation(String data)
     {
         locationInfo.setText(data);
