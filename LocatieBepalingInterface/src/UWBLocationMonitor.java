@@ -1,9 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class main extends JFrame
+public class UWBLocationMonitor extends JFrame
 {
-    public main()
+    public UWBLocationMonitor()
     {
         setTitle("Locatie Bepaling");
         setSize(1200, 600);
@@ -35,7 +35,7 @@ public class main extends JFrame
 
     public static void main(String[] args)
     {
-        main frame = new main();
+        UWBLocationMonitor frame = new UWBLocationMonitor();
         frame.setVisible(true);
     }
 }
