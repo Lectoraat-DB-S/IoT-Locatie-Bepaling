@@ -10,7 +10,9 @@ public class LocationDetailsPanel extends JPanel
     public LocationDetailsPanel()
     {
         setBackground(Color.WHITE);
+        setLayout(new BorderLayout());
         setPreferredSize(new Dimension(400, 200));
+
         locationInfo = new JTextArea(30, 40);
         locationInfo.setEditable(false);
         locationInfo.setFont(new Font("Monospaced", Font.PLAIN, 12));
