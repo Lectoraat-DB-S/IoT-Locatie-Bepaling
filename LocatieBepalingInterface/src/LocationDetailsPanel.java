@@ -2,10 +2,13 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocationDetailsPanel extends JPanel
 {
     private JTextArea locationInfo;
+    private List<String[]> tagDetails;
 
     public LocationDetailsPanel()
     {
@@ -18,17 +21,23 @@ public class LocationDetailsPanel extends JPanel
         locationInfo.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
         JScrollPane scrollPane = new JScrollPane(locationInfo);
-        add(scrollPane);
+        add(scrollPane, BorderLayout.CENTER);
 
         Border grayBorder = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5);
         setBorder(grayBorder);
 
-        // TO DO: Live location text update
-        locationInfo.setText("Put location data here");
+        tagDetails = new ArrayList<>();
+    }
+
+    // Adding tags
+    public void addTag(String id, String x, String y)
+    {
+        tagDetails.add(new String[]{id, x, y});
+        updateLocation();
     }
 
     // For updating text location
-    public void updateLocation(String[][] tagDetails)
+    public void updateLocation()
     {
         StringBuilder sb = new StringBuilder();
         sb.append("Tag ID:      X:          Y:\n");
