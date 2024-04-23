@@ -7,8 +7,10 @@ public class UWBLocationMonitor extends JFrame
     {
         setTitle("Locatie Bepaling");
         setSize(1200, 600);
+        setMinimumSize(new Dimension(1200, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
+
 
         GridBagConstraints gbc = new GridBagConstraints();
 
