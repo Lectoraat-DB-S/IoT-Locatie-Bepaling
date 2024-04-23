@@ -1,70 +1,40 @@
 
-
 #include <Arduino.h>
 
-#include <wifi.h> 
+#include "Wifi.h" 
 
 #define LED 2
 
-// WiFi credentials.
-const char* WIFI_SSID = "wifi-ssid";
-const char* WIFI_PASS = "wifi-password";
+const char* ssid = "yourNetworkName";
+const char* password = "yourNetworkPassword";
 
-void setup()
-{
+void setup(){
     Serial.begin(115200);
   pinMode(LED, OUTPUT);
-    // Giving it a little time because the serial monitor doesn't
-    // immediately attach. Want the firmware that's running to
-    // appear on each upload.
-    delay(2000);
+    delay(1000);
 
-    Serial.println();
-    Serial.println("Running Firmware.");
+    WiFi.mode(WIFI_STA); //Optional
+    WiFi.begin(ssid, password);
+    Serial.println("\nConnecting");
 
-    // Connect to Wifi.
-    Serial.println();
-    Serial.println();
-    Serial.print("Connecting to ");
-    Serial.println(WIFI_SSID);
-
-    // Set WiFi to station mode and disconnect from an AP if it was previously connected
-    WiFi.mode(WIFI_STA);
-    WiFi.disconnect();
-    delay(100);
-
-    WiFi.begin(WIFI_SSID, WIFI_PASS);
-    Serial.println("Connecting...");
-
-    while (WiFi.status() != WL_CONNECTED) {
-      // Check to see if connecting failed.
-      // This is due to incorrect credentials
-      if (WiFi.status() == WL_CONNECT_FAILED) {
-        Serial.println("Failed to connect to WIFI. Please verify credentials: ");
-        Serial.println();
-        Serial.print("SSID: ");
-        Serial.println(WIFI_SSID);
-        Serial.print("Password: ");
-        Serial.println(WIFI_PASS);
-        Serial.println();
-      }
-      delay(5000);
+    while(WiFi.status() != WL_CONNECTED){
+        Serial.print(".");
+        delay(100);
     }
 
-    Serial.println("");
-    Serial.println("WiFi connected");
-    Serial.println("IP address: ");
+    Serial.println("\nConnected to the WiFi network");
+    Serial.print("Local ESP32 IP: ");
     Serial.println(WiFi.localIP());
-
-    Serial.println("Hello World, I'm connected to the internets!!");
 }
+
+
 
 void loop() {
   // put your main code here, to run repeatedly:
   digitalWrite(LED, HIGH);
-  Serial.println("LED is on");
+  //Serial.println("LED is on");
   delay(1000);
   digitalWrite(LED, LOW);
-  Serial.println("LED is off");
+ //Serial.println("LED is off");
   delay(1000);
 }
