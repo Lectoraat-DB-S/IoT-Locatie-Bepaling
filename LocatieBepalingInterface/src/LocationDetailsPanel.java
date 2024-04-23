@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 
 public class LocationDetailsPanel extends JPanel
@@ -10,8 +11,10 @@ public class LocationDetailsPanel extends JPanel
     {
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(400, 200));
-        locationInfo = new JTextArea(10, 30);
+        locationInfo = new JTextArea(30, 40);
         locationInfo.setEditable(false);
+        locationInfo.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
         JScrollPane scrollPane = new JScrollPane(locationInfo);
         add(scrollPane);
 
@@ -23,9 +26,20 @@ public class LocationDetailsPanel extends JPanel
     }
 
     // For updating text location
-    public void updateLocation(String data)
+    public void updateLocation(String[][] tagDetails)
     {
-        locationInfo.setText(data);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tag ID:      X:          Y:\n");
+
+        for(String[] tag: tagDetails)
+        {
+            if(tag.length == 3)
+            {
+                sb.append(String.format("Tag %-8s X: %-8s Y: %-8s%n", tag[0], tag[1], tag[2]));
+            }
+        }
+
+        locationInfo.setText(sb.toString());
         repaint();
     }
 }

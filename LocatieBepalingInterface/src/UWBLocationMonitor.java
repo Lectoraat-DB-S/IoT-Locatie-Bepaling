@@ -33,6 +33,15 @@ public class UWBLocationMonitor extends JFrame
         gbc.weightx = 0.3;
 
         add(textLocationPanel, gbc);
+
+        // Example tag data
+        String[][] tags = {
+                {"001", "100", "150"},
+                {"002", "140", "230"},
+                {"003", "60", "120"}
+        };
+
+        textLocationPanel.updateLocation(tags);
     }
 
     public static void main(String[] args)
