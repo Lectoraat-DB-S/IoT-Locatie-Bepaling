@@ -1,0 +1,16 @@
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\bin\Debug\net6.0-windows\UWBLocationMonitor.exe
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\bin\Debug\net6.0-windows\UWBLocationMonitor.deps.json
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\bin\Debug\net6.0-windows\UWBLocationMonitor.runtimeconfig.json
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\bin\Debug\net6.0-windows\UWBLocationMonitor.dll
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\bin\Debug\net6.0-windows\UWBLocationMonitor.pdb
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.Form1.resources
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.csproj.GenerateResource.cache
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.AssemblyInfoInputs.cache
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.AssemblyInfo.cs
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.csproj.CoreCompileInputs.cache
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.dll
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\refint\UWBLocationMonitor.dll
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.pdb
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\UWBLocationMonitor.genruntimeconfig.cache
+C:\Users\Yorick\Documents\GitHub\IoT-Locatie-Bepaling\UWBLocationMonitor\UWBLocationMonitor\obj\Debug\net6.0-windows\ref\UWBLocationMonitor.dll

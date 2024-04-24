@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dev\\Visual studio\\UWBLocationMonitor\\UWBLocationMonitor\\UWBLocationMonitor.csproj",
+      "projectUniqueName": "C:\\Users\\Yorick\\Documents\\GitHub\\IoT-Locatie-Bepaling\\UWBLocationMonitor\\UWBLocationMonitor\\UWBLocationMonitor.csproj",
       "projectName": "UWBLocationMonitor",
-      "projectPath": "D:\\Dev\\Visual studio\\UWBLocationMonitor\\UWBLocationMonitor\\UWBLocationMonitor.csproj",
+      "projectPath": "C:\\Users\\Yorick\\Documents\\GitHub\\IoT-Locatie-Bepaling\\UWBLocationMonitor\\UWBLocationMonitor\\UWBLocationMonitor.csproj",
       "packagesPath": "C:\\Users\\Yorick\\.nuget\\packages\\",
-      "outputPath": "D:\\Dev\\Visual studio\\UWBLocationMonitor\\UWBLocationMonitor\\obj\\",
+      "outputPath": "C:\\Users\\Yorick\\Documents\\GitHub\\IoT-Locatie-Bepaling\\UWBLocationMonitor\\UWBLocationMonitor\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
