@@ -32,7 +32,7 @@ namespace UWBLocationMonitor
         }
 
         // Method to add or update a tag to the list
-        public void UpdateTag(string ID, double x, double y)
+        public void UpdateTag(string ID, int x, int y)
         {
             var tag = tags.Find(t => t.tagID == ID);
             if (tag != null)
@@ -59,17 +59,17 @@ namespace UWBLocationMonitor
     public class Tag
     {
         public string tagID { get; private set; }
-        public double tagX { get; private set; }
-        public double tagY { get; private set; }
+        public int tagX { get; private set; }
+        public int tagY { get; private set; }
 
-        public Tag(string ID, double x, double y)
+        public Tag(string ID, int x, int y)
         {
             tagID = ID;
             tagX = x;
             tagY = y;
         }
 
-        public void updatePosition(double x, double y)
+        public void updatePosition(int x, int y)
         {
             tagX = x;
             tagY = y;

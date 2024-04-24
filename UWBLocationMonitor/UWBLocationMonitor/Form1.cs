@@ -15,6 +15,7 @@ namespace UWBLocationMonitor
             // Dummy data for debugging
             TagManager.Instance.UpdateTag("001", 100, 100);
             TagManager.Instance.UpdateTag("004", 50, 200);
+            TagManager.Instance.UpdateTag("002", 500, 300);
         }
 
         private void SetupCustomPanels()
