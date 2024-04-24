@@ -15,6 +15,12 @@ namespace UWBLocationMonitor
 
         private void SetupCustomPanels()
         {
+            //Setup for map panel
+            LocationMapPanel locationMapPanel = new LocationMapPanel();
+            locationMapPanel.Dock = DockStyle.Fill; // Fill the panel
+            this.splitContainer1.Panel1.Controls.Add(locationMapPanel);
+
+            //Setup for detail panel
             LocationDetailsPanel locationDetailsPanel = new LocationDetailsPanel();
             locationDetailsPanel.Dock = DockStyle.Fill; // Fill the panel
             this.splitContainer1.Panel2.Controls.Add(locationDetailsPanel);

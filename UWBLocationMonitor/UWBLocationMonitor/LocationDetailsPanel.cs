@@ -12,7 +12,7 @@ namespace UWBLocationMonitor
         public LocationDetailsPanel()
         {
             this.BackColor = Color.White;
-            this.Size = new Size(400, 200);
+            //this.Size = new Size(400, 200);
 
             locationInfo = new TextBox();
             locationInfo.Multiline = true;
