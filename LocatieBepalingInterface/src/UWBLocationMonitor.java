@@ -3,6 +3,8 @@ import java.awt.*;
 
 public class UWBLocationMonitor extends JFrame
 {
+    private LocationDetailsPanel textLocationPanel;
+
     public UWBLocationMonitor()
     {
         setTitle("Locatie Bepaling");
@@ -15,7 +17,7 @@ public class UWBLocationMonitor extends JFrame
         GridBagConstraints gbc = new GridBagConstraints();
 
         LocationMapPanel liveLocationPanel = new LocationMapPanel();
-        LocationDetailsPanel textLocationPanel = new LocationDetailsPanel();
+        textLocationPanel = new LocationDetailsPanel();
 
         // Configuration for both Panels
         gbc.fill = GridBagConstraints.BOTH;
@@ -33,6 +35,11 @@ public class UWBLocationMonitor extends JFrame
         gbc.weightx = 0.3;
 
         add(textLocationPanel, gbc);
+
+        // For debugging
+        textLocationPanel.addTag("001", "50", "100");
+        textLocationPanel.addTag("005", "150", "75");
+
     }
 
     public static void main(String[] args)
