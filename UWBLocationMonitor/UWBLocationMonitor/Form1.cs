@@ -11,6 +11,10 @@ namespace UWBLocationMonitor
             SetupCustomPanels();
 
             this.MinimumSize = new Size(800, 600);
+
+            // Dummy data for debugging
+            TagManager.Instance.UpdateTag("001", 100, 100);
+            TagManager.Instance.UpdateTag("004", 50, 200);
         }
 
         private void SetupCustomPanels()
@@ -37,11 +41,6 @@ namespace UWBLocationMonitor
         }
 
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
         {
 
         }

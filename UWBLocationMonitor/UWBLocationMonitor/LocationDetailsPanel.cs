@@ -7,7 +7,6 @@ namespace UWBLocationMonitor
     public class LocationDetailsPanel : Panel
     {
         private TextBox locationInfo;
-        private List<Tag> tagDetails;
 
         public LocationDetailsPanel()
         {
@@ -26,49 +25,20 @@ namespace UWBLocationMonitor
 
             this.BorderStyle = BorderStyle.FixedSingle;
 
-            tagDetails = new List<Tag>();
-
-            // Add some dummy data
-            AddTag(new Tag { tagID = "001", tagX = 50, tagY = 100 });
+            // Subscribe to the TagsUpdated event
+            TagManager.Instance.TagsUpdated += RefreshDetails;
         }
 
-        public void AddTag(Tag tag)
+        public void RefreshDetails()
         {
-            tagDetails.Add(tag);
-            UpdateLocation(tag.tagID, tag.tagX, tag.tagY);
-        }
+            locationInfo.Clear();
+            var tags = TagManager.Instance.GetTags();
 
-        public void UpdateLocation(string tagID, double x, double y)
-        {
-            foreach (var tag in tagDetails)
+            foreach (var tag in tags)
             {
-                if (tag.tagID == tagID)
-                {
-                    tag.tagX = x;
-                    tag.tagY = y;
-                    break;
-                }
+                string formattedText = String.Format("Tag ID: {0,-10} X: {1,-10} Y: {2,-10}\r\n", tag.tagID, tag.tagX, tag.tagY);
+                locationInfo.AppendText(formattedText);
             }
-
-            var sb = new System.Text.StringBuilder();
-            sb.AppendLine("Tag ID:        X:        Y: ");
-            foreach (var tag in tagDetails)
-            {
-                sb.AppendFormat("Tag {0,-8} X: {1,-8} Y: {2,-8}\n", tag.tagID, tag.tagX, tag.tagY);
-            }
-            locationInfo.Text = sb.ToString();
         }
-
-        public List<Tag> GetTagDetails()
-        {
-            return tagDetails;
-        }
-    }
-
-    public class Tag
-    {
-        public string tagID { get; set; }
-        public double tagX { get; set; }
-        public double tagY { get; set; }
     }
 }
