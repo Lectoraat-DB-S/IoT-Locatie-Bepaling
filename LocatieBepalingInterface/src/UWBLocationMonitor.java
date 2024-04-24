@@ -36,9 +36,10 @@ public class UWBLocationMonitor extends JFrame
 
         add(textLocationPanel, gbc);
 
-        // For debugging
-        textLocationPanel.addTag("001", "50", "100");
-        textLocationPanel.addTag("005", "150", "75");
+        Tag tag = new Tag("001", 50, 100);
+        Tag tag2 = new Tag("005", 150, 50);
+        textLocationPanel.addTag(tag);
+        textLocationPanel.addTag(tag2);
 
     }
 

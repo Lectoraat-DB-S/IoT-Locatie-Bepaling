@@ -8,7 +8,8 @@ import java.util.List;
 public class LocationDetailsPanel extends JPanel
 {
     private JTextArea locationInfo;
-    private List<String[]> tagDetails;
+    private List<Tag> tagDetails;
+    //private Tag tag;
 
     public LocationDetailsPanel()
     {
@@ -30,27 +31,38 @@ public class LocationDetailsPanel extends JPanel
     }
 
     // Adding tags
-    public void addTag(String id, String x, String y)
+    public void addTag(Tag tag)
     {
-        tagDetails.add(new String[]{id, x, y});
-        updateLocation();
+//        tag.setTagID(id);
+//        tag.setTagX(x);
+//        tag.setTagY(y);
+        tagDetails.add(tag);
+
+        updateLocation(tag.getTagID(), tag.getTagX(), tag.getTagY());
     }
 
     // For updating text location
-    public void updateLocation()
+    public void updateLocation(String id, double x, double y)
     {
         StringBuilder sb = new StringBuilder();
         sb.append("Tag ID:      X:          Y:\n");
 
-        for(String[] tag: tagDetails)
-        {
-            if(tag.length == 3)
-            {
-                sb.append(String.format("Tag %-8s X: %-8s Y: %-8s%n", tag[0], tag[1], tag[2]));
+        for(Tag tag : tagDetails) {
+            if (tag.getTagID().equals(id)) {
+                tag.setTagX(x);
+                tag.setTagY(y);
+                //repaint();
+                //return;
             }
         }
-
+        for(Tag tag : tagDetails)
+        {
+            sb.append(String.format("Tag %-8s X: %-8s Y: %-8s%n", tag.getTagID(), tag.getTagX(), tag.getTagY()));
+        }
         locationInfo.setText(sb.toString());
-        repaint();
+    }
+
+    public List<Tag> getTagDetails() {
+        return tagDetails;
     }
 }
