@@ -10,5 +10,8 @@
     <Compile Update="LocationMapPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="LogPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

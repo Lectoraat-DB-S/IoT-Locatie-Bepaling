@@ -2,6 +2,7 @@ namespace UWBLocationMonitor
 {
     public partial class Form1 : Form
     {
+        private LogPanel logPanelInstance;
         public Form1()
         {
             InitializeComponent();
@@ -51,9 +52,19 @@ namespace UWBLocationMonitor
 
         }
 
+        private void logButton_Click(object sender, EventArgs e)
+        {
+            if (logPanelInstance == null || logPanelInstance.IsDisposed)
+            {
+                logPanelInstance = new LogPanel();
+            }
+            logPanelInstance.Show();
+            logPanelInstance.BringToFront();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-
+            LogManager.Log("This is a test log message.");
         }
     }
 }

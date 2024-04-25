@@ -28,67 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            buttonPanel = new Panel();
-            logButton = new Button();
-            splitContainer1 = new SplitContainer();
-            buttonPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.SuspendLayout();
-            SuspendLayout();
+            this.buttonPanel = new System.Windows.Forms.Panel();
+            this.logButton = new System.Windows.Forms.Button();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.testButton = new System.Windows.Forms.Button();
+            this.buttonPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // buttonPanel
             // 
-            buttonPanel.Controls.Add(logButton);
-            buttonPanel.Dock = DockStyle.Top;
-            buttonPanel.Location = new Point(0, 0);
-            buttonPanel.Name = "buttonPanel";
-            buttonPanel.Size = new Size(1184, 29);
-            buttonPanel.TabIndex = 0;
-            buttonPanel.Paint += panel1_Paint;
+            this.buttonPanel.Controls.Add(this.testButton);
+            this.buttonPanel.Controls.Add(this.logButton);
+            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonPanel.Location = new System.Drawing.Point(0, 0);
+            this.buttonPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buttonPanel.Name = "buttonPanel";
+            this.buttonPanel.Size = new System.Drawing.Size(1353, 39);
+            this.buttonPanel.TabIndex = 0;
             // 
             // logButton
             // 
-            logButton.Location = new Point(3, 3);
-            logButton.Name = "logButton";
-            logButton.Size = new Size(75, 23);
-            logButton.TabIndex = 0;
-            logButton.Text = "Log";
-            logButton.UseVisualStyleBackColor = true;
-            logButton.Click += button1_Click;
+            this.logButton.Location = new System.Drawing.Point(3, 4);
+            this.logButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.logButton.Name = "logButton";
+            this.logButton.Size = new System.Drawing.Size(86, 31);
+            this.logButton.TabIndex = 0;
+            this.logButton.Text = "Log";
+            this.logButton.UseVisualStyleBackColor = true;
+            this.logButton.Click += new System.EventHandler(this.logButton_Click);
             // 
             // splitContainer1
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 29);
-            splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 39);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Size = new System.Drawing.Size(1353, 976);
+            this.splitContainer1.SplitterDistance = 964;
+            this.splitContainer1.SplitterWidth = 6;
+            this.splitContainer1.TabIndex = 1;
             // 
-            // splitContainer1.Panel1
+            // testButton
             // 
-            splitContainer1.Panel1.Paint += splitContainer1_Panel1_Paint;
-            // 
-            // splitContainer1.Panel2
-            // 
-            splitContainer1.Panel2.Paint += splitContainer1_Panel2_Paint;
-            splitContainer1.Size = new Size(1184, 732);
-            splitContainer1.SplitterDistance = 844;
-            splitContainer1.SplitterWidth = 5;
-            splitContainer1.TabIndex = 1;
-            splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
+            this.testButton.Location = new System.Drawing.Point(95, 5);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(94, 29);
+            this.testButton.TabIndex = 1;
+            this.testButton.Text = "TestButton";
+            this.testButton.UseVisualStyleBackColor = true;
+            this.testButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(1184, 761);
-            Controls.Add(splitContainer1);
-            Controls.Add(buttonPanel);
-            Name = "Form1";
-            Text = "Form1";
-            buttonPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(1353, 1015);
+            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.buttonPanel);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.buttonPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -96,5 +103,6 @@
         private Panel buttonPanel;
         private SplitContainer splitContainer1;
         private Button logButton;
+        private Button testButton;
     }
 }
