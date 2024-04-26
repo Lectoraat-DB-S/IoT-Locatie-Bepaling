@@ -10,7 +10,7 @@ const char * pwd = "VUrPivfEHF";
 // it can be ip address of the server or 
 // a network broadcast address
 // here is broadcast address
-const char * udpAddress = "145.44.116.100"; // target pc ip
+const char * udpAddress = "145.44.116.113"; // target pc ip
 const int udpPort = 8080; //port server
 
 //create UDP instance
