@@ -45,6 +45,8 @@ namespace UWBLocationMonitor
                 ScrollBars = RichTextBoxScrollBars.ForcedVertical
             };
             this.Controls.Add(richTextBox);
+
+            printLogButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
         private void LogPanel_FormClosed(object sender, FormClosedEventArgs e)
@@ -82,6 +84,11 @@ namespace UWBLocationMonitor
         {
             DetachEventHandlers();
             this.Dispose();
+        }
+
+        private void printLogButton_Click(object sender, EventArgs e)
+        {
+            LogManager.printLogToCSV();
         }
     }
 }
