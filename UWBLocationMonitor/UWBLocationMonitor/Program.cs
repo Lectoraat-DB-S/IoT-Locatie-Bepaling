@@ -12,9 +12,6 @@ namespace UWBLocationMonitor
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-
-            NetworkConnection networkConnection = new NetworkConnection("145.44.116.114", 8080);
-            networkConnection.StartListening();
         }
     }
 }

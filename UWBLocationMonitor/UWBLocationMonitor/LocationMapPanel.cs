@@ -10,6 +10,13 @@ namespace UWBLocationMonitor
             this.BackColor = Color.White;
             this.BorderStyle = BorderStyle.FixedSingle;
             this.DoubleBuffered = true; // Prevent flickering
+
+            TagManager.Instance.TagsUpdated += HandleTagsUpdated;
+        }
+
+        private void HandleTagsUpdated()
+        {
+            this.Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
