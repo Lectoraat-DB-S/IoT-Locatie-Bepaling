@@ -18,5 +18,18 @@ namespace UWBLocationMonitor
         {
             return logMessages;
         }
+
+        public static void printLogToCSV()
+        {
+            var tempPath = Path.GetTempPath();
+            var fileName = "log_" + DateTime.Now.ToString("dd-MM-yyyy") + " " + DateTime.Now.ToString("HH_mm_ss") + ".csv";
+            var path = Path.Combine(tempPath, fileName);
+
+            using var sw = new StreamWriter(path);
+            foreach (var line in logMessages)
+            {
+                sw.WriteLine(line);
+            }
+        }
     }
 }
