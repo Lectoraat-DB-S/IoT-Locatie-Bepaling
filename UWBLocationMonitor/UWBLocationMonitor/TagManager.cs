@@ -17,9 +17,11 @@ namespace UWBLocationMonitor
         // Singleton instance to make sure there is only one instance of TagManager
         private static TagManager instance;
 
+        private Control uiControl;
+
         private TagManager() {  }
 
-        private LocationService locationService = new LocationService();
+        //private LocationService locationService = new LocationService();
 
         public static TagManager Instance
         {
@@ -30,6 +32,26 @@ namespace UWBLocationMonitor
                     instance = new TagManager();
                 }
                 return instance;
+            }
+        }
+
+        public void SetUIControl(Control control)
+        {
+            uiControl = control;
+        }
+
+        private void NotifyUI()
+        {
+            if(uiControl != null && uiControl.InvokeRequired)
+            {
+                uiControl.Invoke((Action)(() =>
+                {
+                    TagsUpdated?.Invoke();
+                }));
+            }
+            else
+            {
+                TagsUpdated?.Invoke();
             }
         }
 
@@ -48,7 +70,7 @@ namespace UWBLocationMonitor
                 tags.Add(new Tag(ID, x, y));
             }
             // Notify the UI to refresh the tag list
-            TagsUpdated?.Invoke();
+            NotifyUI();
         }
 
         public void UpdateTagTrilateration(string ID, int x1, int y1, double r1, int x2, int y2, double r2, int x3, int y3, double r3)
@@ -56,7 +78,7 @@ namespace UWBLocationMonitor
             var position = LocationService.CalculateTagPos(x1, y1, r1, x2, y2, r2, x3, y3, r3, ID);
             int x = (int)position.Item2;
             int y = (int)position.Item3;
-
+            
             UpdateTag(ID, x, y);
         }
 

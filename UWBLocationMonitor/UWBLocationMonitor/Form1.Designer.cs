@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.buttonPanel = new System.Windows.Forms.Panel();
+            this.testButton = new System.Windows.Forms.Button();
             this.logButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.testButton = new System.Windows.Forms.Button();
             this.buttonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.SuspendLayout();
@@ -47,6 +47,16 @@
             this.buttonPanel.Name = "buttonPanel";
             this.buttonPanel.Size = new System.Drawing.Size(1353, 39);
             this.buttonPanel.TabIndex = 0;
+            // 
+            // testButton
+            // 
+            this.testButton.Location = new System.Drawing.Point(95, 5);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(94, 29);
+            this.testButton.TabIndex = 1;
+            this.testButton.Text = "TestButton";
+            this.testButton.UseVisualStyleBackColor = true;
+            this.testButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // logButton
             // 
@@ -69,16 +79,6 @@
             this.splitContainer1.SplitterDistance = 964;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 1;
-            // 
-            // testButton
-            // 
-            this.testButton.Location = new System.Drawing.Point(95, 5);
-            this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(94, 29);
-            this.testButton.TabIndex = 1;
-            this.testButton.Text = "TestButton";
-            this.testButton.UseVisualStyleBackColor = true;
-            this.testButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 

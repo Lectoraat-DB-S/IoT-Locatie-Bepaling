@@ -13,9 +13,11 @@ namespace UWBLocationMonitor
 
             this.MinimumSize = new Size(800, 600);
 
+            TagManager.Instance.SetUIControl(this);
+
             // Dummy data for debugging
-            TagManager.Instance.UpdateTagTrilateration("001", 0, 0, 100, 500, 0, 300, 0, 500, 400);
-            TagManager.Instance.UpdateTagTrilateration("002", 0, 0, 250, 500, 0, 450, 0, 500, 100);
+            //TagManager.Instance.UpdateTagTrilateration("001", 0, 0, 100, 500, 0, 300, 0, 500, 400);
+            //TagManager.Instance.UpdateTagTrilateration("002", 0, 0, 250, 500, 0, 450, 0, 500, 100);
         }
 
         private void SetupCustomPanels()
