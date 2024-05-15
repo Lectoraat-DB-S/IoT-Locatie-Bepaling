@@ -10,12 +10,8 @@ namespace UWBLocationMonitor
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            NetworkConnection networkConnection = new NetworkConnection("145.44.116.114", 8080);
-            networkConnection.StartListening();
-
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-
         }
     }
 }
