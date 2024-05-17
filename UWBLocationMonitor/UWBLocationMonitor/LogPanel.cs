@@ -51,7 +51,7 @@ namespace UWBLocationMonitor
 
         private void LogPanel_FormClosed(object sender, FormClosedEventArgs e)
         {
-            LogManager.OnLogUpdate += AppendLog;
+            LogManager.OnLogUpdate -= AppendLog;
         }
 
         private void PopulateLogs()

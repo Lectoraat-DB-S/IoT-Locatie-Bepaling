@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace UWBLocationMonitor
 {
     public static class LogManager
     {
-        private static readonly List<string> logMessages = new List<string>();
+        private static ConcurrentQueue<string> logMessages = new ConcurrentQueue<string>();
         public static event Action<string> OnLogUpdate;
 
         public static void Log(string message)
         {
-            logMessages.Add(message);
+            logMessages.Enqueue(message);
             OnLogUpdate?.Invoke(message);
         }
 
         public static IEnumerable<string> GetLogMessages()
         {
-            return logMessages;
+            return logMessages.ToArray();
+        }
+
+        public static void ClearLogMessages()
+        {
+            while (logMessages.TryDequeue(out _)) { }
         }
 
         public static void printLogToCSV()
