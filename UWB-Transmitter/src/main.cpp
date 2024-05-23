@@ -1,5 +1,6 @@
 #include "dw3000.h"
 #include "SPI.h"
+#include "WiFi.h"
 
 extern SPISettings _fastSPI;
 
@@ -34,14 +35,21 @@ static dwt_config_t config = {
 };
 
 static uint8_t rx_poll_msg[] = {0x41, 0x88, 0, 0xCA, 0xDE, 'W', 'A', 'V', 'E', 0xE0, 0, 0};
-static uint8_t tx_resp_msg[] = {0x41, 0x88, 0, 0xCA, 0xDE, 'V', 'E', 'W', 'A', 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+static uint8_t tx_resp_msg[] = {0x41, 0x88, 0, 0xCA, 0xDE, 'V', 'E', 'W', 'A', 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static uint8_t frame_seq_nb = 0;
-static uint8_t rx_buffer[20];
+static uint8_t rx_buffer[26];
 static uint32_t status_reg = 0;
 static uint64_t poll_rx_ts;
 static uint64_t resp_tx_ts;
 
+uint8_t mac_address[6] = {0x24, 0x0A, 0xC4, 0x00, 0x00, 0x01};
+
 extern dwt_txconfig_t txconfig_options;
+
+void set_mac_address(uint8_t* msg, uint8_t* mac)
+{
+  memcpy(&msg[20], mac, 6);
+}
 
 void setup()
 {
@@ -141,6 +149,9 @@ void loop()
 
         /* Write and send the response message. See NOTE 9 below. */
         tx_resp_msg[ALL_MSG_SN_IDX] = frame_seq_nb;
+
+        set_mac_address(tx_resp_msg, mac_address);
+
         dwt_writetxdata(sizeof(tx_resp_msg), tx_resp_msg, 0); /* Zero offset in TX buffer. */
         dwt_writetxfctrl(sizeof(tx_resp_msg), 0, 1);          /* Zero offset in TX buffer, ranging. */
         ret = dwt_starttx(DWT_START_TX_DELAYED);
