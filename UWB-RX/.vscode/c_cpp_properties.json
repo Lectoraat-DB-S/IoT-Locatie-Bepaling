@@ -8,9 +8,9 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/Jonathan/KBS IOT/IoT-Locatie-Bepaling-1/UWB-RX/include",
-                "C:/Users/Jonathan/KBS IOT/IoT-Locatie-Bepaling-1/UWB-RX/src",
-                "C:/Users/Jonathan/KBS IOT/IoT-Locatie-Bepaling-1/UWB-RX/lib/Dw3000/src",
+                "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB-RX/include",
+                "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB-RX/src",
+                "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB-RX/lib/Dw3000/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
@@ -239,9 +239,9 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/Jonathan/KBS IOT/IoT-Locatie-Bepaling-1/UWB-RX/include",
-                    "C:/Users/Jonathan/KBS IOT/IoT-Locatie-Bepaling-1/UWB-RX/src",
-                    "C:/Users/Jonathan/KBS IOT/IoT-Locatie-Bepaling-1/UWB-RX/lib/Dw3000/src",
+                    "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB-RX/include",
+                    "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB-RX/src",
+                    "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB-RX/lib/Dw3000/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
