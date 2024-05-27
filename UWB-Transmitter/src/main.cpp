@@ -41,8 +41,7 @@ static uint8_t rx_buffer[26];
 static uint32_t status_reg = 0;
 static uint64_t poll_rx_ts;
 static uint64_t resp_tx_ts;
-
-uint8_t mac_address[6] = {0x24, 0x0A, 0xC4, 0x00, 0x00, 0x01};
+uint8_t baseMac[6];
 
 extern dwt_txconfig_t txconfig_options;
 
@@ -55,6 +54,7 @@ void setup()
 {
   UART_init();
 
+  esp_read_mac(baseMac, ESP_MAC_WIFI_STA);
   _fastSPI = SPISettings(16000000L, MSBFIRST, SPI_MODE0);
 
   spiBegin(PIN_IRQ, PIN_RST);
@@ -150,7 +150,7 @@ void loop()
         /* Write and send the response message. See NOTE 9 below. */
         tx_resp_msg[ALL_MSG_SN_IDX] = frame_seq_nb;
 
-        set_mac_address(tx_resp_msg, mac_address);
+        set_mac_address(tx_resp_msg, baseMac);
 
         dwt_writetxdata(sizeof(tx_resp_msg), tx_resp_msg, 0); /* Zero offset in TX buffer. */
         dwt_writetxfctrl(sizeof(tx_resp_msg), 0, 1);          /* Zero offset in TX buffer, ranging. */
