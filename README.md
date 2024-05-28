@@ -7,9 +7,9 @@ Dit project is een realisatie van een locatiebepalingsysteem op basis van UWB. D
 Voor deze realisatie is gebruik gemaakt van de Makerfabs ESP32 UWB DW3000 (https://www.makerfabs.com/esp32-uwb-dw3000.html). Dit is een ontwikkelbord waarbij een UWB module en een ESP32 geïntergreerd zijn.
 
 ### Software
-Er zijn verschillende softwareonderelen gemaakt voor dit project. De graphic user interface is geprogrammeerd in **C#**. Als dit programma uitgevoerd wordt opent er een window. Als er op dat moment tags en anchors bezig zijn met het verzenden van data dan wordt dit visueel weergegeven en gelogd. Deze log kan geëxporteerd worden naar een .csv bestand.
+Er zijn verschillende softwareonderelen gemaakt voor dit project. De <ins>graphic user interface</ins> is geprogrammeerd in **C#**. Als dit programma uitgevoerd wordt opent er een window. Als er op dat moment tags en anchors bezig zijn met het verzenden van data dan wordt dit visueel weergegeven en gelogd. Deze log kan geëxporteerd worden naar een .csv bestand.
 
-Vervolgens zijn er twee aparte programma's. Eén voor de tag en een ander voor de anchor. Deze programma's zijn geschreven in **C/C++**. Tijdens de ontwikkeling van het project is er getest in Visual Studio Code met de PlatformIO plugin. De code werkt ook in de Arduino IDE. Deze programmas bestaan uit communicatie over UWB en specifiek voor de tag zit er nog een onderdeel in wat zorgt voor UDP communicatie met de GUI.
+Vervolgens zijn er twee aparte programma's. Eén voor de <ins>tag</ins> en een ander voor de <ins>anchor</ins>. Deze programma's zijn geschreven in **C/C++**. Tijdens de ontwikkeling van het project is er getest in Visual Studio Code met de PlatformIO plugin. De code werkt ook in de Arduino IDE. Deze programmas bestaan uit communicatie over UWB en specifiek voor de tag zit er nog een onderdeel in wat zorgt voor UDP communicatie met de GUI.
 
 
 ## Imports en versies
@@ -30,11 +30,13 @@ https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads
 
 
 ## Architectuur
-
+![alt text](image.png)
 
 
 ## References
-
+De UDP communicatie is gebaseerd op de volgende GitHub: https://github.com/firebitlab/iot/tree/master/udpTerminalTanpaParsing
+De communicatie over UWB gebruikt de DW3000 library
+De berekening van de afstand tussen een anchor en een tag bebruikt de DW3000 library
 
 
 ## Usage
