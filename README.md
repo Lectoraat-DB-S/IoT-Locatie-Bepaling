@@ -22,7 +22,8 @@ Microsoft Windows 11 Home Versie 10.0.22631 Build 22631
 We hebben bij dit project gebruik gemaakt van twee libraries:  
 	- Arduino library. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.  
 	- DW3000 library. Deze library is voor het bedienen van de DW3000 chip. De library wordt onderhouden door Makerfabs. Deze library is op dit moment (mei 2024) voor het laatst geüpdate op 05/05/2023.  
-	https://github.com/Makerfabs/Makerfabs-ESP32-UWB-DW3000
+	https://github.com/Makerfabs/Makerfabs-ESP32-UWB-DW3000  
+	- WiFi library. Deze library wordt gebruikt om een unieke ID voor de anchors te bepalen aan de hand van het MAC adres. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.
 
 ### Drivers
 Voor de ESP32 is een driver nodig zodat de COM-port herkend wordt door PlatformIO. Hiervoor hebben wij de CP210x driver geïnstalleerd.
@@ -30,7 +31,12 @@ https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads
 
 
 ## Architectuur
-![alt text](image.png)
+Tag en anchors:  
+- DW3000 library  
+- WiFi library  
+    
+GUI:  
+Zie Technisch Ontwerp.
 
 
 ## References
@@ -40,16 +46,10 @@ De berekening van de afstand tussen een anchor en een tag gebruikt de DW3000 lib
 
 
 ## Usage
-
+In dit scenario wordt er vanuit gegaan dat elk onderdeel de juiste software heeft.  
+Sluit de tags en anchors aan op stroom. Start de GUI via Visual Studio of Visual Studio Code. De tags en anchors resetten zichzelf bij een fout.
 
 
 
 
 - architectuur: graag zien we een korte beschrijving van de architectuur van je project. welke bestanden hebben welke bestanden nodig en wat kun je in welk bestand vinden.
-- reference: graag zien we een lijst met welke code je niet zelf hebt gemaakt of gebaseerd hebt op een ander zijn code met daarbij een link naar de originele code en een datum waarop je die code hebt geraadpleegd. Dit zorgt ervoor dat de juiste mensen credit krijgen. (let op, ook als je een functie ergens vandaan haalt en aanpast hoor je nog steeds te zeggen wie daar credit voor krijgt).
-- usage: op het moment dat je extra hardware zoals een robot gebruikt is het fijn als er ook iets uitgelegd wordt over hoe je alles hebt aangesloten en opgestart. Misschien is het wel van belang dat je eerst het programma op de cobot start voordat je de python code op je laptop start.
-
-- commenting: in code is het vrij normaal om comments te gebruiken om je code duidelijker te maken. Graag zien we dan ook dat dit gedaan wordt.
-	- functie beschrijving: Liefst zien we dat er per functie met een comment uitgelegd wordt hoe de functie werkt en waarvoor ie bedoeld wordt (dit kan vaak in 1 zin). mocht de functie lang zijn dan zien we ook graag comments tussendoor.
-	- Bestand beschrijving: Liefst zien we bovenaan elk bestand dat er een korte beschrijving staat van welke functies er in het bestand geprogrammeerd zijn.
-	- Variabele beschrijving:
