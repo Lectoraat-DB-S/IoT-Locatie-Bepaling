@@ -48,8 +48,3 @@ De berekening van de afstand tussen een anchor en een tag gebruikt de DW3000 lib
 ## Usage
 In dit scenario wordt er vanuit gegaan dat elk onderdeel de juiste software heeft.  
 Sluit de tags en anchors aan op stroom. Start de GUI via Visual Studio of Visual Studio Code. De tags en anchors resetten zichzelf bij een fout.
-
-
-
-
-- architectuur: graag zien we een korte beschrijving van de architectuur van je project. welke bestanden hebben welke bestanden nodig en wat kun je in welk bestand vinden.
