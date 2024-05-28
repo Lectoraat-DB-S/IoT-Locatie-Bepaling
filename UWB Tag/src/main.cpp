@@ -39,7 +39,29 @@ static uint8_t rx_buffer[26];
 static uint32_t status_reg = 0;
 static double tof;
 static double distance;
+
+struct IDDistance {
+    String id;
+    double distance;
+} Anchor1,Anchor2,Anchor3;
+
+static IDDistance id_distances[3];
+static uint8_t id_count = 0;
+
+
+
 extern dwt_txconfig_t txconfig_options;
+
+String getHexStr(uint8_t* data, int length) {
+  String hexStr = "";
+  for (int i = 0; i < length; i++) {
+    if (data[i] < 0x10) {
+      hexStr += "0"; // Leading zero
+    }
+    hexStr += String(data[i], HEX);
+  }
+  return hexStr;
+}
 
 void setup()
 {
@@ -154,17 +176,52 @@ void loop()
 
         tof = ((rtd_init - rtd_resp * (1 - clockOffsetRatio)) / 2.0) * DWT_TIME_UNITS;
         distance = tof * SPEED_OF_LIGHT;
-
+        
         /* Display computed distance on LCD. */
-        snprintf(dist_str, sizeof(dist_str), "DIST: %3.2f m", distance);
+        snprintf(dist_str, sizeof(dist_str),": %3.2f m", distance);
 
-        // print Mac address
-        Serial.print(rx_buffer[20], HEX);
-        Serial.print(rx_buffer[21], HEX);
-        Serial.print(rx_buffer[22], HEX);
-        Serial.print(rx_buffer[23], HEX);
+       // print Mac address
+        String mac_adr = getHexStr(&rx_buffer[20], 4);
+        bool id_exists = false;
 
-        test_run_info((unsigned char *)dist_str);
+        // Check if the ID already exists in one of the Anchors
+        if (Anchor1.id == mac_adr) {
+          Anchor1.distance = distance;
+          id_exists = true;
+        } else if (Anchor2.id == mac_adr) {
+          Anchor2.distance = distance;
+          id_exists = true;
+        } else if (Anchor3.id == mac_adr) {
+          Anchor3.distance = distance;
+          id_exists = true;
+        }
+
+        // If the ID doesn't exist, add it to an empty anchor slot
+        if (!id_exists) {
+          if (Anchor1.id == "") {
+            Anchor1.id = mac_adr;
+            Anchor1.distance = distance;
+            id_count++;
+          } else if (Anchor2.id == "") {
+            Anchor2.id = mac_adr;
+            Anchor2.distance = distance;
+            id_count++;
+          } else if (Anchor3.id == "") {
+            Anchor3.id = mac_adr;
+            Anchor3.distance = distance;
+            id_count++;
+          }
+        }
+
+        if (id_count == 3) {
+          // send struct via wifi
+        }
+        
+        Serial.println(Anchor1.id + ": " + Anchor1.distance);
+        Serial.println(Anchor2.id + ": " + Anchor2.distance);
+        Serial.println(Anchor3.id + ": " + Anchor3.distance);
+
+      
       }
     }
   }
