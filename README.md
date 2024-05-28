@@ -20,10 +20,10 @@ Microsoft Windows 11 Home Versie 10.0.22631 Build 22631
 
 ### Imports
 We hebben bij dit project gebruik gemaakt van twee libraries:  
-	- Arduino library. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.  
-	- DW3000 library. Deze library is voor het bedienen van de DW3000 chip. De library wordt onderhouden door Makerfabs. Deze library is op dit moment (mei 2024) voor het laatst geüpdate op 05/05/2023.  
-	https://github.com/Makerfabs/Makerfabs-ESP32-UWB-DW3000  
-	- WiFi library. Deze library wordt gebruikt om een unieke ID voor de anchors te bepalen aan de hand van het MAC adres. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.
+- Arduino library. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.  
+- DW3000 library. Deze library is voor het bedienen van de DW3000 chip. De library wordt onderhouden door Makerfabs. Deze library is op dit moment (mei 2024) voor het laatst geüpdate op 05/05/2023.  
+https://github.com/Makerfabs/Makerfabs-ESP32-UWB-DW3000  
+- WiFi library. Deze library wordt gebruikt om een unieke ID voor de anchors te bepalen aan de hand van het MAC adres. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.
 
 ### Drivers
 Voor de ESP32 is een driver nodig zodat de COM-port herkend wordt door PlatformIO. Hiervoor hebben wij de CP210x driver geïnstalleerd.
