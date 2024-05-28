@@ -14,14 +14,14 @@ Vervolgens zijn er twee aparte programma's. Eén voor de <ins>tag</ins> en een a
 
 ## Imports en versies
 Voor dit project zijn een heel aantal extra softwareonderdelen geïnstalleerd. 
-Dit is getest op:
-Microsoft Windows 11 Pro Versie 10.0.22631 Build 22631
+Dit is getest op:  
+Microsoft Windows 11 Pro Versie 10.0.22631 Build 22631  
 Microsoft Windows 11 Home Versie 10.0.22631 Build 22631
 
 ### Imports
-We hebben bij dit project gebruik gemaakt van twee libraries:
-	- Arduino library. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.
-	- DW3000 library. Deze library is voor het bedienen van de DW3000 chip. De library wordt onderhouden door Makerfabs. Deze library is op dit moment (mei 2024) voor het laatst geüpdate op 05/05/2023.
+We hebben bij dit project gebruik gemaakt van twee libraries:  
+	- Arduino library. Deze zit ingebakken in Arduino IDE of PlatformIO met een simpele #include statement.  
+	- DW3000 library. Deze library is voor het bedienen van de DW3000 chip. De library wordt onderhouden door Makerfabs. Deze library is op dit moment (mei 2024) voor het laatst geüpdate op 05/05/2023.  
 	https://github.com/Makerfabs/Makerfabs-ESP32-UWB-DW3000
 
 ### Drivers
@@ -36,7 +36,7 @@ https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads
 ## References
 De UDP communicatie is gebaseerd op de volgende GitHub: https://github.com/firebitlab/iot/tree/master/udpTerminalTanpaParsing
 De communicatie over UWB gebruikt de DW3000 library
-De berekening van de afstand tussen een anchor en een tag bebruikt de DW3000 library
+De berekening van de afstand tussen een anchor en een tag gebruikt de DW3000 library
 
 
 ## Usage
