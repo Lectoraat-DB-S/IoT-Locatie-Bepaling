@@ -2,10 +2,11 @@
 #include <WiFi.h>
 #include <WiFiUdp.h>
 
+//defines pins
 #define PIN_RST 27
 #define PIN_IRQ 34
 #define PIN_SS 4
-
+//defines UWB
 #define RNG_DELAY_MS 1000
 #define TX_ANT_DLY 16385
 #define RX_ANT_DLY 16385
@@ -17,21 +18,32 @@
 #define POLL_TX_TO_RESP_RX_DLY_UUS 240
 #define RESP_RX_TIMEOUT_UUS 400
 
+//defines struct
+#define STRUCT_FULL 3
+#define STRUCT_EMTPY 0
+
+#define CHANNEL_NUM 5
+#define TX_RX_PREAMBLE 9
+#define SFD_SYMBOL_NON_STD_8 1
+#define SFD_TIMEOUT (129 + 8 - 8)
+#define METER_TO_CENTI 100
+
+
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
-    5,                /* Channel number. */
-    DWT_PLEN_128,     /* Preamble length. Used in TX only. */
-    DWT_PAC8,         /* Preamble acquisition chunk size. Used in RX only. */
-    9,                /* TX preamble code. Used in TX only. */
-    9,                /* RX preamble code. Used in RX only. */
-    1,                /* 0 to use standard 8 symbol SFD, 1 to use non-standard 8 symbol, 2 for non-standard 16 symbol SFD and 3 for 4z 8 symbol SDF type */
-    DWT_BR_6M8,       /* Data rate. */
-    DWT_PHRMODE_STD,  /* PHY header mode. */
-    DWT_PHRRATE_STD,  /* PHY header rate. */
-    (129 + 8 - 8),    /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
-    DWT_STS_MODE_OFF, /* STS disabled */
-    DWT_STS_LEN_64,   /* STS length see allowed values in Enum dwt_sts_lengths_e */
-    DWT_PDOA_M0       /* PDOA mode off */
+    CHANNEL_NUM,              /* Channel number. */
+    DWT_PLEN_128,             /* Preamble length. Used in TX only. */
+    DWT_PAC8,                 /* Preamble acquisition chunk size. Used in RX only. */
+    TX_RX_PREAMBLE,           /* TX preamble code. Used in TX only. */
+    TX_RX_PREAMBLE,           /* RX preamble code. Used in RX only. */
+    SFD_SYMBOL_NON_STD_8,     /* 0 to use standard 8 symbol SFD, 1 to use non-standard 8 symbol, 2 for non-standard 16 symbol SFD and 3 for 4z 8 symbol SDF type */
+    DWT_BR_6M8,               /* Data rate. */
+    DWT_PHRMODE_STD,          /* PHY header mode. */
+    DWT_PHRRATE_STD,          /* PHY header rate. */
+    SFD_TIMEOUT,              /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
+    DWT_STS_MODE_OFF,         /* STS disabled */
+    DWT_STS_LEN_64,           /* STS length see allowed values in Enum dwt_sts_lengths_e */
+    DWT_PDOA_M0               /* PDOA mode off */
 };
 
 static uint8_t tx_poll_msg[] = {0x41, 0x88, 0, 0xCA, 0xDE, 'W', 'A', 'V', 'E', 0xE0, 0, 0};
@@ -41,7 +53,6 @@ static uint8_t rx_buffer[26];
 static uint32_t status_reg = 0;
 static double tof;
 static int distance;
-static bool semaphore = true;
 static String macAddress = WiFi.macAddress();
 
 struct IDDistance {
@@ -215,6 +226,7 @@ void loop()
         resp_rx_ts = dwt_readrxtimestamplo32();
 
         /* Read carrier integrator value and calculate clock offset ratio. See NOTE 11 below. */
+        //MAAK 26 NIET MEER EEN MAGIC NUMBER
         clockOffsetRatio = ((float)dwt_readclockoffset()) / (uint32_t)(1 << 26);
 
         /* Get timestamps embedded in response message. */
@@ -226,7 +238,7 @@ void loop()
         rtd_resp = resp_tx_ts - poll_rx_ts;
 
         tof = ((rtd_init - rtd_resp * (1 - clockOffsetRatio)) / 2.0) * DWT_TIME_UNITS;
-        distance = tof * SPEED_OF_LIGHT*100;
+        distance = tof * SPEED_OF_LIGHT * METER_TO_CENTI;
         
         /* Display computed distance on LCD. */
         //snprintf(dist_str, sizeof(dist_str),": cm", distance);
@@ -265,7 +277,7 @@ void loop()
         }
         
 
-        if (id_count == 3) {
+        if (id_count == STRUCT_FULL) {
           // send struct via wifi
           udp.beginPacket(udpAddress, udpPort);
           udp.print(macAddress+";"+
@@ -275,8 +287,10 @@ void loop()
           udp.endPacket();
 
           //Clear structs for new data from other anchors
-          Anchor1 = EmptyStruct;Anchor2 = EmptyStruct;Anchor3 = EmptyStruct;
-          id_count = 0;
+          Anchor1 = EmptyStruct;
+          Anchor2 = EmptyStruct;
+          Anchor3 = EmptyStruct;
+          id_count = STRUCT_EMTPY;
 
         }
         
