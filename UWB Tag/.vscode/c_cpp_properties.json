@@ -10,6 +10,7 @@
             "includePath": [
                 "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB Tag/include",
                 "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB Tag/src",
+                "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB Tag/lib/dw3000",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
@@ -230,7 +231,6 @@
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
@@ -241,6 +241,7 @@
                 "path": [
                     "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB Tag/include",
                     "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB Tag/src",
+                    "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "C:/Users/Jonathan/KBS-IOT Tag/IoT-Locatie-Bepaling-1/UWB Tag/lib/dw3000",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
@@ -461,7 +462,6 @@
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                    "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                     "C:/Users/Jonathan/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",

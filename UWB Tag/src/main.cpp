@@ -231,7 +231,7 @@ void loop()
         /* Display computed distance on LCD. */
         //snprintf(dist_str, sizeof(dist_str),": cm", distance);
 
-       // print Mac address
+       //Mac address to Hexadecimal
         String mac_adr = getHexStr(&rx_buffer[20], 4);
         bool id_exists = false;
 
@@ -266,8 +266,6 @@ void loop()
         
 
         if (id_count == 3) {
-          semaphore = false;
-
           // send struct via wifi
           udp.beginPacket(udpAddress, udpPort);
           udp.print(macAddress+";"+
@@ -280,12 +278,11 @@ void loop()
           Anchor1 = EmptyStruct;Anchor2 = EmptyStruct;Anchor3 = EmptyStruct;
           id_count = 0;
 
-          semaphore = true;
         }
         
-        Serial.println(Anchor1.id + ": " + Anchor1.distance);
-        Serial.println(Anchor2.id + ": " + Anchor2.distance);
-        Serial.println(Anchor3.id + ": " + Anchor3.distance);
+        // Serial.println(Anchor1.id + ": " + Anchor1.distance);
+        // Serial.println(Anchor2.id + ": " + Anchor2.distance);
+        // Serial.println(Anchor3.id + ": " + Anchor3.distance);
       }
     }
   }
