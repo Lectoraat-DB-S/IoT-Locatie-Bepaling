@@ -17,22 +17,29 @@ extern SPISettings _fastSPI;
 #define RESP_MSG_TS_LEN 4
 #define POLL_RX_TO_RESP_TX_DLY_UUS 450
 
+#define CHANNEL_NUM 5
+#define TX_RX_PREAMBLE 9
+#define SFD_SYMBOL_NON_STD_8 1
+#define SFD_TIMEOUT (129 + 8 - 8)
+
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
-    5,                /* Channel number. */
-    DWT_PLEN_128,     /* Preamble length. Used in TX only. */
-    DWT_PAC8,         /* Preamble acquisition chunk size. Used in RX only. */
-    9,                /* TX preamble code. Used in TX only. */
-    9,                /* RX preamble code. Used in RX only. */
-    1,                /* 0 to use standard 8 symbol SFD, 1 to use non-standard 8 symbol, 2 for non-standard 16 symbol SFD and 3 for 4z 8 symbol SDF type */
-    DWT_BR_6M8,       /* Data rate. */
-    DWT_PHRMODE_STD,  /* PHY header mode. */
-    DWT_PHRRATE_STD,  /* PHY header rate. */
-    (129 + 8 - 8),    /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
-    DWT_STS_MODE_OFF, /* STS disabled */
-    DWT_STS_LEN_64,   /* STS length see allowed values in Enum dwt_sts_lengths_e */
-    DWT_PDOA_M0       /* PDOA mode off */
+    CHANNEL_NUM,              /* Channel number. */
+    DWT_PLEN_128,             /* Preamble length. Used in TX only. */
+    DWT_PAC8,                 /* Preamble acquisition chunk size. Used in RX only. */
+    TX_RX_PREAMBLE,           /* TX preamble code. Used in TX only. */
+    TX_RX_PREAMBLE,           /* RX preamble code. Used in RX only. */
+    SFD_SYMBOL_NON_STD_8,     /* 0 to use standard 8 symbol SFD, 1 to use non-standard 8 symbol, 2 for non-standard 16 symbol SFD and 3 for 4z 8 symbol SDF type */
+    DWT_BR_6M8,               /* Data rate. */
+    DWT_PHRMODE_STD,          /* PHY header mode. */
+    DWT_PHRRATE_STD,          /* PHY header rate. */
+    SFD_TIMEOUT,              /* SFD timeout (preamble length + 1 + SFD length - PAC size). Used in RX only. */
+    DWT_STS_MODE_OFF,         /* STS disabled */
+    DWT_STS_LEN_64,           /* STS length see allowed values in Enum dwt_sts_lengths_e */
+    DWT_PDOA_M0               /* PDOA mode off */
 };
+
+
 
 static uint8_t rx_poll_msg[] = {0x41, 0x88, 0, 0xCA, 0xDE, 'W', 'A', 'V', 'E', 0xE0, 0, 0};
 static uint8_t tx_resp_msg[] = {0x41, 0x88, 0, 0xCA, 0xDE, 'V', 'E', 'W', 'A', 0xE1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -55,7 +62,7 @@ void setup()
   UART_init();
 
   esp_read_mac(baseMac, ESP_MAC_WIFI_STA);
-  _fastSPI = SPISettings(16000000L, MSBFIRST, SPI_MODE0);
+  _fastSPI = SPISettings(16000000L, MSBFIRST, SPI_MODE0); //KIJK NAAR MAGIC NUMBER IN DEZE REGEL
 
   spiBegin(PIN_IRQ, PIN_RST);
   spiSelect(PIN_SS);
@@ -137,10 +144,12 @@ void loop()
         poll_rx_ts = get_rx_timestamp_u64();
 
         /* Compute response message transmission time. See NOTE 7 below. */
+        //VERANDER MAGIC NUMBER 8
         resp_tx_time = (poll_rx_ts + (POLL_RX_TO_RESP_TX_DLY_UUS * UUS_TO_DWT_TIME)) >> 8;
         dwt_setdelayedtrxtime(resp_tx_time);
 
         /* Response TX timestamp is the transmission time we programmed plus the antenna delay. */
+        //VERANDER MAGIC NUMBER 8
         resp_tx_ts = (((uint64_t)(resp_tx_time & 0xFFFFFFFEUL)) << 8) + TX_ANT_DLY;
 
         /* Write all timestamps in the final message. See NOTE 8 below. */
