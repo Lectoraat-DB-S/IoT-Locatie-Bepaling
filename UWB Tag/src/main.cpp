@@ -43,6 +43,8 @@ static double tof;
 static int distance;
 static bool semaphore = true;
 static String macAddress = WiFi.macAddress();
+unsigned long previousMillis = 0;  // Globale variabele om tijdsstempel op te slaan
+const long interval = 2000;        // Interval van 2 seconden
 
 struct IDDistance {
     String id = "";
@@ -74,7 +76,7 @@ const char * pwd = "4wLPR3shared!@-";
 // here is broadcast address
 
 // const char * udpAddress = "145.44.116.100"; // target pc ip (IOT_WOUTER)
-//const char * udpAddress = "10.38.4.138"; // target pc ip (AWL_WOUTER)
+// const char * udpAddress = "10.38.4.138"; // target pc ip (AWL_WOUTER)
 const char * udpAddress = "10.38.4.155"; // target pc ip (AWL_YORICK)
 const int udpPort = 8080; //port server
 
@@ -264,7 +266,7 @@ void loop()
           }
         }
         
-
+      
         if (id_count == 3) {
           // send struct via wifi
           udp.beginPacket(udpAddress, udpPort);
@@ -277,7 +279,11 @@ void loop()
           //Clear structs for new data from other anchors
           Anchor1 = EmptyStruct;Anchor2 = EmptyStruct;Anchor3 = EmptyStruct;
           id_count = 0;
-
+        } else if ((id_count < 3) && (millis() - previousMillis >= interval)) {
+          udp.beginPacket(udpAddress, udpPort);
+          udp.print("ERROR: tag " + macAddress + " is not in range of three anchors!");
+          udp.endPacket();
+          previousMillis = millis();
         }
         
         // Serial.println(Anchor1.id + ": " + Anchor1.distance);
