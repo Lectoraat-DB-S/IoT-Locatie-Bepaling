@@ -36,8 +36,10 @@ namespace UWBLocationMonitor
             locationInfo.Clear(); // Clear TextBox
             var tags = TagManager.Instance.GetTags(); // Get all tags
 
+            var tagsCopy = tags.ToList();
+
             // Print all tags in list
-            foreach (var tag in tags)
+            foreach (var tag in tagsCopy)
             {
                 string formattedText = String.Format("Tag ID: {0,-10} X: {1,-10} Y: {2,-10}\r\n", tag.tagID, tag.tagX, tag.tagY);
                 locationInfo.AppendText(formattedText);

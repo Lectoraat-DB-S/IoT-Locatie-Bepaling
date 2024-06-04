@@ -29,7 +29,7 @@ namespace UWBLocationMonitor
             isListening = true;
             Task.Run(() => ListenForMessages());
             LogManager.Log("Started connection");
-            LogManager.Log("Time;Tag;Anchor1;Dist(cm);Anchor2;Dist(cm);Anchor3;Dist(cm)");
+            LogManager.Log("Time;Tag;Anchor1;Dist(cm);Anchor2;Dist(cm);Anchor3;Dist(cm);X;Y");
         }
 
         private void ListenForMessages()
@@ -92,17 +92,26 @@ namespace UWBLocationMonitor
                 int[] coordinatesAnchor3 = GetAnchorCoordinates(parts[5]);
                 int R3 = int.Parse(parts[6]);
 
-                // Add time to message
-                DateTime currentTime = DateTime.Now;
-                string timeStampedMessage = currentTime.ToString("HH:mm:ss") + (";") + message;
-                // Log message with time
-                LogManager.Log(timeStampedMessage);
-
                 // Calculate tag position
                 LocationService.CalculateTagPos(
                     coordinatesAnchor1[0], coordinatesAnchor1[1], R1,
                     coordinatesAnchor2[0], coordinatesAnchor2[1], R2,
                     coordinatesAnchor3[0], coordinatesAnchor3[1], R3, tag);
+                
+                // Get coordinates in a variable
+                var tagResult = LocationService.CalculateTagPos(
+                                            coordinatesAnchor1[0], coordinatesAnchor1[1], R1,
+                                            coordinatesAnchor2[0], coordinatesAnchor2[1], R2,
+                                            coordinatesAnchor3[0], coordinatesAnchor3[1], R3, tag);
+                // Convert coordinates to string
+                string tagCoordinates = $"{tagResult.Item2};{tagResult.Item3}";
+                
+                // Add time to message
+                DateTime currentTime = DateTime.Now;
+                string timeStampedMessage = currentTime.ToString("HH:mm:ss") + ";" + message;
+                // Log message with time and coordinates
+                LogManager.Log(timeStampedMessage + ";" + tagCoordinates);
+
 
             }
             catch (Exception ex)
