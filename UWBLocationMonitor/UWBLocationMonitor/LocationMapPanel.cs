@@ -36,14 +36,14 @@ namespace UWBLocationMonitor
 
         private void DrawTag(Graphics g, Tag tag)
         {
-            using (Brush brush = new SolidBrush(Color.Red))
+            using (Brush brush = new SolidBrush(Color.Pink))
             {
                 int diameter = 10;
                 int radius = diameter / 2;
                 int x = tag.tagX - radius;
                 int y = tag.tagY - radius;
 
-                g.FillEllipse(brush, x, y, diameter, diameter);
+                g.FillEllipse(brush, (x / 2) + 350, y / 2, diameter, diameter);
 
                 using (Font font = new Font("Arial", 8))
                 {
@@ -52,7 +52,7 @@ namespace UWBLocationMonitor
                     sf.LineAlignment = StringAlignment.Center;
 
                     // Position of the text for the tagID
-                    g.DrawString(tag.tagID, font, Brushes.Black, tag.tagX, tag.tagY + diameter, sf);
+                    g.DrawString(tag.tagID, font, Brushes.Black, (tag.tagX / 2) + 350, (tag.tagY + diameter) / 2, sf);
                 }
             }
         }

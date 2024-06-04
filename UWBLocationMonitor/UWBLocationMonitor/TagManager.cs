@@ -73,6 +73,7 @@ namespace UWBLocationMonitor
             NotifyUI();
         }
 
+        /*
         public void UpdateTagTrilateration(string ID, int x1, int y1, double r1, int x2, int y2, double r2, int x3, int y3, double r3)
         {
             var position = LocationService.CalculateTagPos(x1, y1, r1, x2, y2, r2, x3, y3, r3, ID);
@@ -81,6 +82,7 @@ namespace UWBLocationMonitor
             
             UpdateTag(ID, x, y);
         }
+        */
 
         // Method to get the list of tags
         public List<Tag> GetTags()
@@ -111,7 +113,7 @@ namespace UWBLocationMonitor
 
     public class LocationService
     {
-        public static Tuple<string, double, double> CalculateTagPos(int x1, int y1, double r1, int x2, int y2, double r2, int x3, int y3, double r3, string ID)
+        public static Tuple<string, int, int> CalculateTagPos(int x1, int y1, int r1, int x2, int y2, int r2, int x3, int y3, int r3, string ID)
         {
             double A = 2 * x2 - 2 * x1;
             double B = 2 * y2 - 2 * y1;
@@ -119,8 +121,11 @@ namespace UWBLocationMonitor
             double D = 2 * x3 - 2 * x2;
             double E = 2 * y3 - 2 * y2;
             double F = Math.Pow(r2, 2) - Math.Pow(r3, 2) - Math.Pow(x2, 2) + Math.Pow(x3, 2) - Math.Pow(y2, 2) + Math.Pow(y3, 2);
-            double x = (C * E - F * B) / (E * A - B * D);
-            double y = (C * D - A * F) / (B * D - A * E);
+            int x = (int)Math.Round((C * E - F * B) / (E * A - B * D));
+            int y = (int)Math.Round((C * D - A * F) / (B * D - A * E));
+
+            TagManager.Instance.UpdateTag(ID, x, y);
+
             return Tuple.Create(ID, x, y);
         }
     }

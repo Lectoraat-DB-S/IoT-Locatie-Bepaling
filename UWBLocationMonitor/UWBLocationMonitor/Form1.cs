@@ -20,6 +20,9 @@ namespace UWBLocationMonitor
             // Dummy data for debugging
             //TagManager.Instance.UpdateTagTrilateration("001", 0, 0, 100, 500, 0, 300, 0, 500, 400);
             //TagManager.Instance.UpdateTagTrilateration("002", 0, 0, 250, 500, 0, 450, 0, 500, 100);
+            TagManager.Instance.UpdateTag("Anchor1", 420, 1500);
+            TagManager.Instance.UpdateTag("Anchor2", 420, 0);
+            TagManager.Instance.UpdateTag("Anchor3", 0, 0);
         }
 
         private void SetupCustomPanels()
@@ -67,7 +70,11 @@ namespace UWBLocationMonitor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LogManager.Log("This is a test log message.");
+            //LogManager.Log("This is a test log message.");
+
+            //TagManager.Instance.UpdateTagTrilateration("002", 0, 0, 6.5, 10, 0, 4.8, 0, 10, 2.7);
+
+            //LocationService.CalculateTagPos(0, 0, 6.5, 10, 0, 4.8, 0, 10, 2.7, "Tag1");
         }
     }
 }

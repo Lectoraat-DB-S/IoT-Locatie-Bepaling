@@ -27,22 +27,25 @@ namespace UWBLocationMonitor
             isListening = true;
             Task.Run(() => ListenForMessages());
             LogManager.Log("Started connection");
-            LogManager.Log("Tag;X1;Y1;R1;X2;Y2;R2;X3;Y3;R3;");
+            LogManager.Log("Time;Tag;Anchor1;Dist(m);Anchor2;Dist(m);Anchor3;Dist(m)");
         }
 
         private void ListenForMessages()
         {
             try
             {
-                while(isListening)
+                while (isListening)
                 {
                     IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
                     byte[] receivedBytes = udpClient.Receive(ref remoteEndPoint);
 
                     string receivedData = Encoding.UTF8.GetString(receivedBytes);
-                    //LogManager.Log(receivedData);
+                    var currentTime = DateTime.Now.TimeOfDay;
+                    //LogManager.Log(currentTime+";"+receivedData);
 
                     OnMessageReceived(receivedData);
+
+                    /* TODO: FIXEN ONMESSAGERECEIVED DING MET FORMAT!!! */
                 }
             }
             catch (Exception ex)
@@ -67,25 +70,77 @@ namespace UWBLocationMonitor
             string[] parts = message.Split(";");
             string tag = parts[0];
 
-            int[] numbers = new int[parts.Length - 2];
-            for (int i = 1; i < parts.Length - 1; i++)
+            // B0:A7:32:AB:19:94;b0a732ab;0.85;34987a74;1.41;34987a72;0.24
+
+
+            int X1 = 0;
+            int Y1 = 0;
+            int R1 = int.Parse(parts[2]);
+            int X2 = 0;
+            int Y2 = 0;
+            int R2 = int.Parse(parts[4]);
+            int X3 = 0;
+            int Y3 = 0;
+            int R3 = int.Parse(parts[6]);
+            /*
+            for (int i = 0; i < parts.Length; i++)
             {
-                numbers[i - 1] = int.Parse(parts[i]);
+                LogManager.Log(parts[i]);
+            }
+            */
+
+            if (parts[1] == "34987a74")
+            {
+                X1 = 420;
+                Y1 = 1650;
+            }
+            else if (parts[1] == "34987a72")
+            {
+                X1 = 0;
+                Y1 = 0;
+            }
+            else
+            {
+                X1 = 420;
+                Y1 = 0;
             }
 
-            int X1 = numbers[0];
-            int Y1 = numbers[1];
-            int R1 = numbers[2];
-            int X2 = numbers[3];
-            int Y2 = numbers[4];
-            int R2 = numbers[5];
-            int X3 = numbers[6];
-            int Y3 = numbers[7];
-            int R3 = numbers[8];
-            
+            if (parts[3] == "34987a74")
+            {
+                X2 = 420;
+                Y2 = 1650;
+            }
+            else if (parts[3] == "34987a72")
+            {
+                X2 = 0;
+                Y2 = 0;
+            }
+            else
+            {
+                X2 = 420;
+                Y2 = 0;
+            }
+
+            if (parts[5] == "34987a74")
+            {
+                X3 = 420;
+                Y3 = 1650;
+            }
+            else if (parts[5] == "34987a72")
+            {
+                X3 = 0;
+                Y3 = 0;
+            }
+            else
+            {
+                X3 = 420;
+                Y3 = 0;
+            }
+
+
             LogManager.Log(message);
 
-            TagManager.Instance.UpdateTagTrilateration(tag, X1, Y1, R1, X2, Y2, R2, X3, Y3, R3);
+            LocationService.CalculateTagPos(X1, Y1, R1, X2, Y2, R2, X3, Y3, R3, tag);
         }
     }
 }
