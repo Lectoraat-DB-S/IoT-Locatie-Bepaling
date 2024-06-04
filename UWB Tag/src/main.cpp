@@ -15,6 +15,9 @@
 #define POLL_TX_TO_RESP_RX_DLY_UUS 240
 #define RESP_RX_TIMEOUT_UUS 400
 
+#define TAG_HEIGHT 1
+#define ANCHOR_HEIGHT 10
+
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
     5,                /* Channel number. */
@@ -154,6 +157,9 @@ void loop()
 
         tof = ((rtd_init - rtd_resp * (1 - clockOffsetRatio)) / 2.0) * DWT_TIME_UNITS;
         distance = tof * SPEED_OF_LIGHT;
+
+        // Pythagorean theorem 
+        uint8_t formulaPY = sqrt(pow(ANCHOR_HEIGHT - TAG_HEIGHT, 2) - pow(distance, 2));
 
         /* Display computed distance on LCD. */
         snprintf(dist_str, sizeof(dist_str), "DIST: %3.2f m", distance);
