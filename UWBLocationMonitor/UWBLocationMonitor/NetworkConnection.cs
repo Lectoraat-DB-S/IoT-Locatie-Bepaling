@@ -14,6 +14,7 @@ namespace UWBLocationMonitor
         private int listenPort;
         private bool isListening;
         private IPAddress allowedSenderIPAddress;
+        private Dictionary<string, (int X, int Y, DateTime Timestamp)> lastKnownCoordinates = new Dictionary<string, (int X, int Y, DateTime Timestamp)>();
 
         // Connect to given address
         public NetworkConnection(string allowedIP, int port)
@@ -66,6 +67,9 @@ namespace UWBLocationMonitor
         // Handle message
         protected virtual void OnMessageReceived(string message)
         {
+            int maxDeltaDistance = 50; // Max difference in locations
+            TimeSpan maxDeltaTime = TimeSpan.FromSeconds(1); // Max time difference for allowing updates
+
             // Message format:
             // TagID;AnchorID1;DistanceAnchor1;AnchorID2;DistanceAnchor2;AnchorID3;DistanceAnchor3
             // Example:
@@ -92,26 +96,53 @@ namespace UWBLocationMonitor
                 int[] coordinatesAnchor3 = GetAnchorCoordinates(parts[5]);
                 int R3 = int.Parse(parts[6]);
 
-                // Calculate tag position
+                // Calculate tag position to get the new coordinates without updating the map
+                var tagResult = LocationService.CalculateTagPosWithoutUpdate(
+                    coordinatesAnchor1[0], coordinatesAnchor1[1], R1,
+                    coordinatesAnchor2[0], coordinatesAnchor2[1], R2,
+                    coordinatesAnchor3[0], coordinatesAnchor3[1], R3, tag);
+
+                // Extract the calculated coordinates
+                int newX = tagResult.Item2;
+                int newY = tagResult.Item3;
+                DateTime newTimestamp = DateTime.Now;
+
+                // Check if the tag has previous coordinates
+                if (lastKnownCoordinates.TryGetValue(tag, out var lastData))
+                {
+                    // Calculate differences
+                    int dX = Math.Abs(newX - lastData.X);
+                    int dY = Math.Abs(newY - lastData.Y);
+                    TimeSpan deltaTime = newTimestamp - lastData.Timestamp;
+
+                    // If the difference is too big and the time difference is too small, ignore update
+                    if (dX > maxDeltaDistance || dY > maxDeltaDistance)
+                    {
+                        if (deltaTime <= maxDeltaTime)
+                        {
+                            LogManager.Log($"Ignored update for tag {tag} due to large movement: {dX} in X, {dY} in Y");
+                            return;
+                        }
+                    }
+                }
+
+                // Update the last known coordinates and timestamp
+                lastKnownCoordinates[tag] = (newX, newY, newTimestamp);
+
+                // Now call CalculateTagPos to update the map
                 LocationService.CalculateTagPos(
                     coordinatesAnchor1[0], coordinatesAnchor1[1], R1,
                     coordinatesAnchor2[0], coordinatesAnchor2[1], R2,
                     coordinatesAnchor3[0], coordinatesAnchor3[1], R3, tag);
-                
-                // Get coordinates in a variable
-                var tagResult = LocationService.CalculateTagPos(
-                                            coordinatesAnchor1[0], coordinatesAnchor1[1], R1,
-                                            coordinatesAnchor2[0], coordinatesAnchor2[1], R2,
-                                            coordinatesAnchor3[0], coordinatesAnchor3[1], R3, tag);
+
                 // Convert coordinates to string
                 string tagCoordinates = $"{tagResult.Item2};{tagResult.Item3}";
-                
+
                 // Add time to message
                 DateTime currentTime = DateTime.Now;
                 string timeStampedMessage = currentTime.ToString("HH:mm:ss") + ";" + message;
                 // Log message with time and coordinates
                 LogManager.Log(timeStampedMessage + ";" + tagCoordinates);
-
 
             }
             catch (Exception ex)

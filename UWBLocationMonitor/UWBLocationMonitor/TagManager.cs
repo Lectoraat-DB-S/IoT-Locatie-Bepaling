@@ -109,8 +109,8 @@ namespace UWBLocationMonitor
     // Location for tag subclass
     public class LocationService
     {
-        // Calctulate tag position with trilateration 
-        public static Tuple<string, int, int> CalculateTagPos(int x1, int y1, int r1, int x2, int y2, int r2, int x3, int y3, int r3, string ID)
+        // Method to calculate tag position without updating the map
+        public static Tuple<string, int, int> CalculateTagPosWithoutUpdate(int x1, int y1, int r1, int x2, int y2, int r2, int x3, int y3, int r3, string ID)
         {
             double A = 2 * x2 - 2 * x1;
             double B = 2 * y2 - 2 * y1;
@@ -121,9 +121,15 @@ namespace UWBLocationMonitor
             int x = (int)Math.Round((C * E - F * B) / (E * A - B * D));
             int y = (int)Math.Round((C * D - A * F) / (B * D - A * E));
 
-            TagManager.Instance.UpdateTag(ID, x, y);
-
             return Tuple.Create(ID, x, y);
+        }
+
+        // Original method to calculate tag position and update the map
+        public static Tuple<string, int, int> CalculateTagPos(int x1, int y1, int r1, int x2, int y2, int r2, int x3, int y3, int r3, string ID)
+        {
+            var result = CalculateTagPosWithoutUpdate(x1, y1, r1, x2, y2, r2, x3, y3, r3, ID);
+            TagManager.Instance.UpdateTag(result.Item1, result.Item2, result.Item3);
+            return result;
         }
     }
 }
