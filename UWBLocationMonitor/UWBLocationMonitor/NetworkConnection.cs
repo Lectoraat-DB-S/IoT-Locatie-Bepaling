@@ -67,7 +67,7 @@ namespace UWBLocationMonitor
         // Handle message
         protected virtual void OnMessageReceived(string message)
         {
-            int maxDeltaDistance = 50; // Max difference in locations
+            int maxDeltaDistance = 25; // Max difference in locations
             TimeSpan maxDeltaTime = TimeSpan.FromSeconds(1); // Max time difference for allowing updates
 
             // Message format:
@@ -78,6 +78,12 @@ namespace UWBLocationMonitor
             {
                 // Split message in parts
                 string[] parts = message.Split(";");
+
+                // Check for error message
+                if (parts.Length < 2)
+                {
+                    throw new ArgumentException(message);
+                }
 
                 // Check for full message
                 if (parts.Length < 7)
@@ -147,7 +153,7 @@ namespace UWBLocationMonitor
             }
             catch (Exception ex)
             {
-                LogManager.Log($"Error processing message: {ex.Message}");
+                LogManager.Log($"Error message: {ex.Message}");
             }
         }
 
