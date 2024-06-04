@@ -35,6 +35,10 @@
 #define MAC_LENGTH 4
 #define RX_PLACE 20
 
+// Tag height and anchor height in centimeters
+#define TAG_HEIGHT 100
+#define ANCHOR_HEIGHT 430
+
 
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
@@ -78,12 +82,17 @@ static uint8_t id_count = 0;
 /* WiFi network name and password */
 // Your wirelless router ssid and password
 
+
+/**
+ * WiFi bij Windesheim
+*/
 // const char * ssid = "iotroam"; 
 // const char * pwd = "b75VgrRXcj";
 
 /**
  * WiFi bij PERRON038 (AWL)
-**/
+*/
+
 const char * ssid = "AWL";
 const char * pwd = "4wLPR3shared!@-";
 
@@ -245,6 +254,9 @@ void loop()
 
         tof = ((rtd_init - rtd_resp * (1 - clockOffsetRatio)) / 2.0) * DWT_TIME_UNITS;
         distance = tof * SPEED_OF_LIGHT * METER_TO_CENTI;
+
+        // Pythagorean theorem 
+        uint8_t formulaPY = sqrt(pow(ANCHOR_HEIGHT - TAG_HEIGHT, 2) - pow(distance, 2));
         
         //Mac address to Hexadecimal
         String mac_adr = getHexStr(&rx_buffer[RX_PLACE], MAC_LENGTH);
@@ -252,13 +264,13 @@ void loop()
 
         // Check if the ID already exists in one of the Anchors
         if (Anchor1.id == mac_adr) {
-          Anchor1.distance = distance;
+          Anchor1.distance = formulaPY;
           id_exists = true;
         } else if (Anchor2.id == mac_adr) {
-          Anchor2.distance = distance;
+          Anchor2.distance = formulaPY;
           id_exists = true;
         } else if (Anchor3.id == mac_adr) {
-          Anchor3.distance = distance;
+          Anchor3.distance = formulaPY;
           id_exists = true;
         }
 
@@ -266,15 +278,15 @@ void loop()
         if (!id_exists) {
           if (Anchor1.id == "") {
             Anchor1.id = mac_adr;
-            Anchor1.distance = distance;
+            Anchor1.distance = formulaPY;
             id_count++;
           } else if (Anchor2.id == "") {
             Anchor2.id = mac_adr;
-            Anchor2.distance = distance;
+            Anchor2.distance = formulaPY;
             id_count++;
           } else if (Anchor3.id == "") {
             Anchor3.id = mac_adr;
-            Anchor3.distance = distance;
+            Anchor3.distance = formulaPY;
             id_count++;
           }
         }
@@ -293,7 +305,7 @@ void loop()
           Anchor2 = EmptyStruct;
           Anchor3 = EmptyStruct;
           id_count = STRUCT_EMTPY;
-        } else if ((id_count < 3) && (millis() - previousMillis >= interval)) {
+        } else if ((id_count < STRUCT_FULL) && (millis() - previousMillis >= interval)) {
           udp.beginPacket(udpAddress, udpPort);
           udp.print("ERROR: tag " + macAddress + " is not in range of three anchors!");
           udp.endPacket();
