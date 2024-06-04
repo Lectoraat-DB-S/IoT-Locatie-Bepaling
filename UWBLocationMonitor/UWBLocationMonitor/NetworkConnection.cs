@@ -15,6 +15,7 @@ namespace UWBLocationMonitor
         private bool isListening;
         private IPAddress allowedSenderIPAddress;
 
+        // Connect to given address
         public NetworkConnection(string allowedIP, int port)
         {
             listenPort = port;
@@ -22,12 +23,13 @@ namespace UWBLocationMonitor
             udpClient = new UdpClient(listenPort);
         }
 
+        // Start listening for messages received from the connection
         public void StartListening()
         {
             isListening = true;
             Task.Run(() => ListenForMessages());
             LogManager.Log("Started connection");
-            LogManager.Log("Time;Tag;Anchor1;Dist(m);Anchor2;Dist(m);Anchor3;Dist(m)");
+            LogManager.Log("Time;Tag;Anchor1;Dist(cm);Anchor2;Dist(cm);Anchor3;Dist(cm)");
         }
 
         private void ListenForMessages()
@@ -37,15 +39,11 @@ namespace UWBLocationMonitor
                 while (isListening)
                 {
                     IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                    byte[] receivedBytes = udpClient.Receive(ref remoteEndPoint);
+                    byte[] receivedBytes = udpClient.Receive(ref remoteEndPoint); // Receive data
+                    string receivedData = Encoding.UTF8.GetString(receivedBytes); // Parse data to string
 
-                    string receivedData = Encoding.UTF8.GetString(receivedBytes);
-                    var currentTime = DateTime.Now.TimeOfDay;
-                    //LogManager.Log(currentTime+";"+receivedData);
-
+                    // Parse data to function
                     OnMessageReceived(receivedData);
-
-                    /* TODO: FIXEN ONMESSAGERECEIVED DING MET FORMAT!!! */
                 }
             }
             catch (Exception ex)
@@ -58,89 +56,73 @@ namespace UWBLocationMonitor
             }
         }
 
+        // Stop listening (Not used)
         public void StopListening()
         {
             isListening = false;
             udpClient.Close();
         }
 
+        // Handle message
         protected virtual void OnMessageReceived(string message)
         {
-            //Message handling
-            string[] parts = message.Split(";");
-            string tag = parts[0];
-
+            // Message format:
+            // TagID;AnchorID1;DistanceAnchor1;AnchorID2;DistanceAnchor2;AnchorID3;DistanceAnchor3
+            // Example:
             // B0:A7:32:AB:19:94;b0a732ab;0.85;34987a74;1.41;34987a72;0.24
+            try
+            {
+                // Split message in parts
+                string[] parts = message.Split(";");
 
+                // Check for full message
+                if (parts.Length < 7)
+                {
+                    throw new ArgumentException("Message format is incorrect");
+                }
 
-            int X1 = 0;
-            int Y1 = 0;
-            int R1 = int.Parse(parts[2]);
-            int X2 = 0;
-            int Y2 = 0;
-            int R2 = int.Parse(parts[4]);
-            int X3 = 0;
-            int Y3 = 0;
-            int R3 = int.Parse(parts[6]);
-            /*
-            for (int i = 0; i < parts.Length; i++)
-            {
-                LogManager.Log(parts[i]);
-            }
-            */
+                string tag = parts[0];
 
-            if (parts[1] == "34987a74")
-            {
-                X1 = 420;
-                Y1 = 1650;
-            }
-            else if (parts[1] == "34987a72")
-            {
-                X1 = 0;
-                Y1 = 0;
-            }
-            else
-            {
-                X1 = 420;
-                Y1 = 0;
-            }
+                int[] coordinatesAnchor1 = GetAnchorCoordinates(parts[1]);
+                int R1 = int.Parse(parts[2]);
 
-            if (parts[3] == "34987a74")
-            {
-                X2 = 420;
-                Y2 = 1650;
-            }
-            else if (parts[3] == "34987a72")
-            {
-                X2 = 0;
-                Y2 = 0;
-            }
-            else
-            {
-                X2 = 420;
-                Y2 = 0;
-            }
+                int[] coordinatesAnchor2 = GetAnchorCoordinates(parts[3]);
+                int R2 = int.Parse(parts[4]);
 
-            if (parts[5] == "34987a74")
-            {
-                X3 = 420;
-                Y3 = 1650;
-            }
-            else if (parts[5] == "34987a72")
-            {
-                X3 = 0;
-                Y3 = 0;
-            }
-            else
-            {
-                X3 = 420;
-                Y3 = 0;
-            }
+                int[] coordinatesAnchor3 = GetAnchorCoordinates(parts[5]);
+                int R3 = int.Parse(parts[6]);
 
+                // Add time to message
+                DateTime currentTime = DateTime.Now;
+                string timeStampedMessage = currentTime.ToString("HH:mm:ss") + (";") + message;
+                // Log message with time
+                LogManager.Log(timeStampedMessage);
 
-            LogManager.Log(message);
+                // Calculate tag position
+                LocationService.CalculateTagPos(
+                    coordinatesAnchor1[0], coordinatesAnchor1[1], R1,
+                    coordinatesAnchor2[0], coordinatesAnchor2[1], R2,
+                    coordinatesAnchor3[0], coordinatesAnchor3[1], R3, tag);
 
-            LocationService.CalculateTagPos(X1, Y1, R1, X2, Y2, R2, X3, Y3, R3, tag);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Log($"Error processing message: {ex.Message}");
+            }
+        }
+
+        // Hard coded anchor positions
+        private int[] GetAnchorCoordinates(string anchorID)
+        {
+            switch (anchorID)
+            {
+                case "34987a74":
+                    return new int[] { 420, 1650 };
+                case "34987a72":
+                    return new int[] { 0, 0 };
+                default:
+                    return new int[] { 420, 0 };
+            }
         }
     }
 }
