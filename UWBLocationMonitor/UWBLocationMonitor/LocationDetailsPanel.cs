@@ -10,9 +10,9 @@ namespace UWBLocationMonitor
 
         public LocationDetailsPanel()
         {
-            this.BackColor = Color.White;
-            //this.Size = new Size(400, 200);
+            this.BackColor = Color.White; // Set background white
 
+            // Creating and settings for main TextBox
             locationInfo = new TextBox();
             locationInfo.Multiline = true;
             locationInfo.ReadOnly = true;
@@ -23,17 +23,20 @@ namespace UWBLocationMonitor
             locationInfo.Dock = DockStyle.Fill;
             this.Controls.Add(locationInfo);
 
+            // Set panel border
             this.BorderStyle = BorderStyle.FixedSingle;
 
             // Subscribe to the TagsUpdated event
             TagManager.Instance.TagsUpdated += RefreshDetails;
         }
 
+        // Rewrite all text in TextBox
         public void RefreshDetails()
         {
-            locationInfo.Clear();
-            var tags = TagManager.Instance.GetTags();
+            locationInfo.Clear(); // Clear TextBox
+            var tags = TagManager.Instance.GetTags(); // Get all tags
 
+            // Print all tags in list
             foreach (var tag in tags)
             {
                 string formattedText = String.Format("Tag ID: {0,-10} X: {1,-10} Y: {2,-10}\r\n", tag.tagID, tag.tagX, tag.tagY);
