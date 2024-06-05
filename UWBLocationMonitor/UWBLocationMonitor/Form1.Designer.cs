@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.buttonPanel = new System.Windows.Forms.Panel();
-            this.testButton = new System.Windows.Forms.Button();
             this.logButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.buttonPanel.SuspendLayout();
@@ -39,7 +38,6 @@
             // 
             // buttonPanel
             // 
-            this.buttonPanel.Controls.Add(this.testButton);
             this.buttonPanel.Controls.Add(this.logButton);
             this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.buttonPanel.Location = new System.Drawing.Point(0, 0);
@@ -47,16 +45,6 @@
             this.buttonPanel.Name = "buttonPanel";
             this.buttonPanel.Size = new System.Drawing.Size(1353, 39);
             this.buttonPanel.TabIndex = 0;
-            // 
-            // testButton
-            // 
-            this.testButton.Location = new System.Drawing.Point(95, 5);
-            this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(94, 29);
-            this.testButton.TabIndex = 1;
-            this.testButton.Text = "TestButton";
-            this.testButton.UseVisualStyleBackColor = true;
-            this.testButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // logButton
             // 
@@ -103,6 +91,5 @@
         private Panel buttonPanel;
         private SplitContainer splitContainer1;
         private Button logButton;
-        private Button testButton;
     }
 }

@@ -21,8 +21,7 @@ namespace UWBLocationMonitor
 
         private TagManager() {  }
 
-        //private LocationService locationService = new LocationService();
-
+        // Constructor for tag manager
         public static TagManager Instance
         {
             get
@@ -35,11 +34,13 @@ namespace UWBLocationMonitor
             }
         }
 
+        // Set control to given class
         public void SetUIControl(Control control)
         {
             uiControl = control;
         }
 
+        // Notify UI when a tag gets updated
         private void NotifyUI()
         {
             if(uiControl != null && uiControl.InvokeRequired)
@@ -59,6 +60,8 @@ namespace UWBLocationMonitor
         public void UpdateTag(string ID, int x, int y)
         {
             var tag = tags.Find(t => t.tagID == ID);
+            
+            // Check if tag exists
             if (tag != null)
             {
                 // Tag exists, update the position
@@ -73,17 +76,6 @@ namespace UWBLocationMonitor
             NotifyUI();
         }
 
-        /*
-        public void UpdateTagTrilateration(string ID, int x1, int y1, double r1, int x2, int y2, double r2, int x3, int y3, double r3)
-        {
-            var position = LocationService.CalculateTagPos(x1, y1, r1, x2, y2, r2, x3, y3, r3, ID);
-            int x = (int)position.Item2;
-            int y = (int)position.Item3;
-            
-            UpdateTag(ID, x, y);
-        }
-        */
-
         // Method to get the list of tags
         public List<Tag> GetTags()
         {
@@ -91,12 +83,14 @@ namespace UWBLocationMonitor
         }
     }
 
+    // Tag subclass
     public class Tag
     {
         public string tagID { get; private set; }
         public int tagX { get; private set; }
         public int tagY { get; private set; }
 
+        // Tag constructor
         public Tag(string ID, int x, int y)
         {
             tagID = ID;
@@ -104,6 +98,7 @@ namespace UWBLocationMonitor
             tagY = y;
         }
 
+        // Update tag postion
         public void updatePosition(int x, int y)
         {
             tagX = x;
@@ -111,9 +106,11 @@ namespace UWBLocationMonitor
         }
     }
 
+    // Location for tag subclass
     public class LocationService
     {
-        public static Tuple<string, int, int> CalculateTagPos(int x1, int y1, int r1, int x2, int y2, int r2, int x3, int y3, int r3, string ID)
+        // Method to calculate tag position without updating the map
+        public static Tuple<string, int, int> CalculateTagPosWithoutUpdate(int x1, int y1, int r1, int x2, int y2, int r2, int x3, int y3, int r3, string ID)
         {
             double A = 2 * x2 - 2 * x1;
             double B = 2 * y2 - 2 * y1;
@@ -124,9 +121,15 @@ namespace UWBLocationMonitor
             int x = (int)Math.Round((C * E - F * B) / (E * A - B * D));
             int y = (int)Math.Round((C * D - A * F) / (B * D - A * E));
 
-            TagManager.Instance.UpdateTag(ID, x, y);
-
             return Tuple.Create(ID, x, y);
+        }
+
+        // Original method to calculate tag position and update the map
+        public static Tuple<string, int, int> CalculateTagPos(int x1, int y1, int r1, int x2, int y2, int r2, int x3, int y3, int r3, string ID)
+        {
+            var result = CalculateTagPosWithoutUpdate(x1, y1, r1, x2, y2, r2, x3, y3, r3, ID);
+            TagManager.Instance.UpdateTag(result.Item1, result.Item2, result.Item3);
+            return result;
         }
     }
 }
