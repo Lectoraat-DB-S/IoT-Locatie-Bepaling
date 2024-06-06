@@ -87,13 +87,13 @@ static uint8_t id_count = 0;
  * WiFi bij Windesheim
 */
 
+
 // const char * ssid = "iotroam"; 
 // const char * pwd = "b75VgrRXcj";
 
 /**
  * WiFi bij PERRON038 (AWL)
 */
-
 const char * ssid = "AWL";
 const char * pwd = "4wLPR3shared!@-";
 
@@ -194,6 +194,8 @@ void setup()
   Serial.println(WiFi.localIP());
   //This initializes udp and transfer buffer
   udp.begin(udpPort);
+  // Enable modem sleep
+  WiFi.setSleep(true);
 }
 
 void loop()
@@ -299,6 +301,7 @@ void loop()
         
               // send full struct via wifi
         if (id_count == STRUCT_FULL) {
+          WiFi.setSleep(false); // enable wifi transfer
           udp.beginPacket(udpAddress, udpPort);
           udp.print(macAddress+";"+
                     Anchor1.id+";"+Anchor1.distance+";"+
@@ -311,6 +314,8 @@ void loop()
           Anchor2 = EmptyStruct;
           Anchor3 = EmptyStruct;
           id_count = STRUCT_EMTPY;
+          WiFi.setSleep(true); // set wifi in sleep mode
+
         } else if ((id_count < STRUCT_FULL) && (millis() - previousMillis >= interval)) {
           udp.beginPacket(udpAddress, udpPort);
           udp.print("ERROR: tag " + macAddress + " is not in range of three anchors!");
