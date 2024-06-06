@@ -86,6 +86,7 @@ static uint8_t id_count = 0;
 /**
  * WiFi bij Windesheim
 */
+
 // const char * ssid = "iotroam"; 
 // const char * pwd = "b75VgrRXcj";
 
@@ -103,8 +104,8 @@ const char * pwd = "4wLPR3shared!@-";
 // here is broadcast address
 
 // const char * udpAddress = "145.44.116.100"; // target pc ip (IOT_WOUTER)
-// const char * udpAddress = "10.38.4.138"; // target pc ip (AWL_WOUTER)
-const char * udpAddress = "10.38.4.155"; // target pc ip (AWL_YORICK)
+const char * udpAddress = "10.38.4.138"; // target pc ip (AWL_WOUTER)
+// const char * udpAddress = "10.38.4.155"; // target pc ip (AWL_YORICK)
 const int udpPort = 8080; //port server
 
 //create UDP instance
@@ -254,9 +255,10 @@ void loop()
 
         tof = ((rtd_init - rtd_resp * (1 - clockOffsetRatio)) / 2.0) * DWT_TIME_UNITS;
         distance = tof * SPEED_OF_LIGHT * METER_TO_CENTI;
+        if(distance < 330) distance = 330;
 
         // Pythagorean theorem 
-        uint8_t formulaPY = sqrt(pow(ANCHOR_HEIGHT - TAG_HEIGHT, 2) - pow(distance, 2));
+        int formulaPY = sqrt(pow(distance, 2) - pow(ANCHOR_HEIGHT - TAG_HEIGHT, 2 )); 
         
         //Mac address to Hexadecimal
         String mac_adr = getHexStr(&rx_buffer[RX_PLACE], MAC_LENGTH);
@@ -290,6 +292,10 @@ void loop()
             id_count++;
           }
         }
+
+        Serial.println(Anchor1.id+";"+Anchor1.distance+";"+
+                        Anchor2.id+";"+Anchor2.distance+";"+
+                        Anchor3.id+";"+Anchor3.distance);
         
               // send full struct via wifi
         if (id_count == STRUCT_FULL) {
@@ -310,8 +316,7 @@ void loop()
           udp.print("ERROR: tag " + macAddress + " is not in range of three anchors!");
           udp.endPacket();
           previousMillis = millis();
-        }
-      
+        }      
       }
     }
   }
